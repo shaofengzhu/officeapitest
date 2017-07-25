@@ -64,12 +64,23 @@ function testValue2DArray() {
         });
 }
 
+function testRest() {
+    return OfficeExtension.HttpUtility.sendLocalDocumentRequest({
+        url: "activeWorkbook/sheets",
+        method: "GET"
+    })
+    .then((response) => {
+        console.log(JSON.stringify(response));
+    })
+}
+
 function doTests(){
     var tests = [
         testSimpleRequest, 
         testObjectNewAndObjectAsParameter, 
         testArrayValue, 
-        testValue2DArray];
+        testValue2DArray,
+        testRest];
     var p = OfficeExtension.Utility._createPromiseFromResult(null);
     for (var i = 0; i < tests.length; i++){
         p = p.then(createOneTestFunc(tests[i]));
@@ -87,7 +98,7 @@ function createOneTestFunc(func){
     };
 }
 
-OfficeExtension.NativeBridgeTest.setTestFunc(doTests);
+OfficeExtension.HostBridgeTest.setTestFunc(doTests);
 
 checkLibraryLoaded();
 
